@@ -14,4 +14,5 @@ public class JumpComponent : MonoBehaviour {
 	public float gravityScale = 1;
 	public enum Jumpstatus {jumping, falling, grounded};
 	public Jumpstatus jumpstatus;
+	public bool canJump;
 }
