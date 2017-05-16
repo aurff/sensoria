@@ -10,6 +10,7 @@ public class JumpSystem : EgoSystem<EgoConstraint<Transform, Rigidbody2D, JumpCo
 		
 		//Register Event Handlers
 		EgoEvents<CollisionEnter2DEvent>.AddHandler (Handle);
+		EgoEvents<InputDataReceivedEvent>.AddHandler (Handle);
 
 		constraint.ForEachGameObject ((egoComponent, transform, rigbody, jump) => {
 			jump.jumpstatus = JumpComponent.Jumpstatus.grounded;
@@ -18,7 +19,7 @@ public class JumpSystem : EgoSystem<EgoConstraint<Transform, Rigidbody2D, JumpCo
 	
 	// Update is called once per frame
 	public override void FixedUpdate () {
-		constraint.ForEachGameObject ((egoComponent, transform, rigbody, jump) => {
+		/*constraint.ForEachGameObject ((egoComponent, transform, rigbody, jump) => {
 			if (Input.GetKeyDown(jump.keyCodeJump) && jump.jumpstatus == JumpComponent.Jumpstatus.grounded)
 			{
 				jump.jumpstatus = JumpComponent.Jumpstatus.jumping;
@@ -32,6 +33,26 @@ public class JumpSystem : EgoSystem<EgoConstraint<Transform, Rigidbody2D, JumpCo
 			}
 
 			if (Input.GetKeyUp(jump.keyCodeJump) && jump.jumpstatus == JumpComponent.Jumpstatus.jumping)
+			{
+				rigbody.gravityScale = jump.gravityScale;
+				jump.jumpstatus = JumpComponent.Jumpstatus.falling;
+			}
+		});*/
+
+		constraint.ForEachGameObject ((egoComponent, transform, rigbody, jump) => {
+			if (jump.canJump && jump.jumpstatus == JumpComponent.Jumpstatus.grounded)
+			{
+				jump.jumpstatus = JumpComponent.Jumpstatus.jumping;
+				Ego.AddComponent<JumpStatus>(egoComponent);
+				rigbody.gravityScale = 0;
+				jump.jumpPosition = transform.position;
+			}
+
+			if (jump.canJump && jump.jumpstatus == JumpComponent.Jumpstatus.jumping) {
+				rigbody.MovePosition(Vector3.Lerp(transform.position, new Vector3(transform.position.x, jump.jumpPosition.y + jump.jumpHeight, transform.position.z), jump.jumpTime));
+			}
+
+			if (!jump.canJump && jump.jumpstatus == JumpComponent.Jumpstatus.jumping)
 			{
 				rigbody.gravityScale = jump.gravityScale;
 				jump.jumpstatus = JumpComponent.Jumpstatus.falling;
@@ -59,6 +80,22 @@ public class JumpSystem : EgoSystem<EgoConstraint<Transform, Rigidbody2D, JumpCo
 		});
 	}
 
+	void Handle(InputDataReceivedEvent e)
+	{
+		constraint.ForEachGameObject ((egoComponent, transform, rigbody, jump) => {
+			//Enable Jumping 
+			if (e.data == 1)
+			{
+				jump.canJump = false;
+			}
+			//Disable Jumping 
+			if (e.data == 2)
+			{
+				jump.canJump = true;
+			}	
+		});
+	
+	}
 	void PlayerHitByPlayer() {
 		EgoEvents<PlayerHitEvent>.AddEvent (new PlayerHitEvent ());
 	}

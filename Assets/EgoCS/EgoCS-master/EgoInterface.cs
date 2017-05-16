@@ -11,7 +11,8 @@ public class EgoInterface : MonoBehaviour
 			new JumpSystem (),
 			new GameStateSystem(),
 			new PlayerSystem(),
-			new GameEndSystem()
+			new GameEndSystem(),
+			new StreamSystem()
 		);
     }
 
