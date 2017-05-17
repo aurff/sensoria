@@ -10,4 +10,5 @@ public class MovementComponent : MonoBehaviour {
 	public KeyCode keyCodeLeft;
 	public enum ViewDirection {left, right, none};
 	public ViewDirection viewDirection;
+	public bool canMoveRight, canMoveLeft;
 }
