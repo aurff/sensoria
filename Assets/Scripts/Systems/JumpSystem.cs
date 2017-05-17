@@ -84,12 +84,12 @@ public class JumpSystem : EgoSystem<EgoConstraint<Transform, Rigidbody2D, JumpCo
 	{
 		constraint.ForEachGameObject ((egoComponent, transform, rigbody, jump) => {
 			//Enable Jumping 
-			if (e.data == 1)
+			if (e.data == 5)
 			{
 				jump.canJump = false;
 			}
 			//Disable Jumping 
-			if (e.data == 2)
+			if (e.data == 6)
 			{
 				jump.canJump = true;
 			}	
