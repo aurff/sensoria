@@ -5,6 +5,7 @@ using System.IO.Ports;
 public class SerialPortComponent : MonoBehaviour
 {
     public SerialPort port;
+    public int playerID;
 }
 
 //DO NOT ADD MONOBEHAVIOUR MESSAGES (Start, Update, etc.)
