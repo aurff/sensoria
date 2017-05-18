@@ -92,24 +92,30 @@ public class MovementSystem : EgoSystem<EgoConstraint<Transform, MovementCompone
 	{
 		constraint.ForEachGameObject ((egoComponent, transform, movement) =>
 		{
-			if (e.data == 1)
+			if (e.playerID == movement.playerID)
 			{
-				movement.canMoveRight = true;
-				movement.canMoveLeft = false;
-			}
-			else if (e.data == 2)
-			{
-				movement.canMoveRight = false;
-			}
+				Debug.Log(e.data + ", " + e.playerID);
+				if (e.data == 1)
+				{
+					Debug.Log(e.playerID + ": Start move right!");
+					movement.canMoveRight = true;
+					movement.canMoveLeft = false;
+				}
+				else if (e.data == 2)
+				{
+					Debug.Log(e.playerID + ": Stop move right!");
+					movement.canMoveRight = false;
+				}
 
-			if (e.data == 3)
-			{
-				movement.canMoveLeft = true;
-				movement.canMoveRight = false;
-			}
-			else if (e.data == 4)
-			{
-				movement.canMoveLeft = false;
+				if (e.data == 3)
+				{
+					movement.canMoveLeft = true;
+					movement.canMoveRight = false;
+				}
+				else if (e.data == 4)
+				{
+					movement.canMoveLeft = false;
+				}
 			}
 		});
 	}

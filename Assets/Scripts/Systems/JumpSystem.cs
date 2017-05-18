@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class JumpSystem : EgoSystem<EgoConstraint<Transform, Rigidbody2D, JumpComponent>> {
+public class JumpSystem : EgoSystem<EgoConstraint<Transform, Rigidbody2D, JumpComponent, PlayerComponent>> {
 
 	// Use this for initialization
 	public override void Start () {
@@ -12,7 +12,7 @@ public class JumpSystem : EgoSystem<EgoConstraint<Transform, Rigidbody2D, JumpCo
 		EgoEvents<CollisionEnter2DEvent>.AddHandler (Handle);
 		EgoEvents<InputDataReceivedEvent>.AddHandler (Handle);
 
-		constraint.ForEachGameObject ((egoComponent, transform, rigbody, jump) => {
+		constraint.ForEachGameObject ((egoComponent, transform, rigbody, jump, player) => {
 			jump.jumpstatus = JumpComponent.Jumpstatus.grounded;
 		});
 	}
@@ -39,7 +39,7 @@ public class JumpSystem : EgoSystem<EgoConstraint<Transform, Rigidbody2D, JumpCo
 			}
 		});*/
 
-		constraint.ForEachGameObject ((egoComponent, transform, rigbody, jump) => {
+		constraint.ForEachGameObject ((egoComponent, transform, rigbody, jump, player) => {
 			if (jump.canJump && jump.jumpstatus == JumpComponent.Jumpstatus.grounded)
 			{
 				jump.jumpstatus = JumpComponent.Jumpstatus.jumping;
@@ -63,7 +63,7 @@ public class JumpSystem : EgoSystem<EgoConstraint<Transform, Rigidbody2D, JumpCo
 
 	void Handle(CollisionEnter2DEvent e)
 	{
-		constraint.ForEachGameObject ((egoComponent, transform, rigbody, jump) => {
+		constraint.ForEachGameObject ((egoComponent, transform, rigbody, jump, player) => {
 			//When Player lands on ground
 			if (e.egoComponent2.HasComponents<Ground>() && jump.jumpstatus == JumpComponent.Jumpstatus.falling ) {
 				jump.jumpstatus = JumpComponent.Jumpstatus.grounded;
@@ -82,19 +82,22 @@ public class JumpSystem : EgoSystem<EgoConstraint<Transform, Rigidbody2D, JumpCo
 
 	void Handle(InputDataReceivedEvent e)
 	{
-		constraint.ForEachGameObject ((egoComponent, transform, rigbody, jump) => {
-			//Enable Jumping 
-			if (e.data == 5)
+		constraint.ForEachGameObject ((egoComponent, transform, rigbody, jump, player) => {
+
+			if (e.playerID == player.playerID)
 			{
-				jump.canJump = false;
+				//Enable Jumping 
+				if (e.data == 5)
+				{
+					jump.canJump = false;
+				}
+				//Disable Jumping 
+				if (e.data == 6)
+				{
+					jump.canJump = true;
+				}	
 			}
-			//Disable Jumping 
-			if (e.data == 6)
-			{
-				jump.canJump = true;
-			}	
 		});
-	
 	}
 	void PlayerHitByPlayer() {
 		EgoEvents<PlayerHitEvent>.AddEvent (new PlayerHitEvent ());
