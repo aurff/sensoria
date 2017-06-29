@@ -109,6 +109,8 @@ public class JumpSystem : EgoSystem<EgoConstraint<Transform, Rigidbody2D, JumpCo
 			{
 				player.score++;
 
+				EgoEvents<ScoreEvent>.AddEvent(new ScoreEvent(player.playerID, player.score));
+
 				if (player.score == 3)
 				{
 					EgoEvents<GameEndEvent>.AddEvent(new GameEndEvent(playerID));
