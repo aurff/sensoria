@@ -12,7 +12,12 @@ public class EgoInterface : MonoBehaviour
 			new GameStateSystem(),
 			new PlayerSystem(),
 			new GameEndSystem(),
-			new StreamSystem()
+			new StreamSystem(),
+			new StartScreenSystem(),
+			new StartScreenUISystem(),
+			new PlayerReadySystem(),
+			new SceneManagementSystem(),
+			new AnimationSystem()
 		);
     }
 

@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class PlayerHitEvent : EgoEvent
 {
-	public PlayerHitEvent()
+	public readonly int playerID;
+	public PlayerHitEvent(int playerID)
 	{
-		
+		this.playerID = playerID;
 	}
 }
