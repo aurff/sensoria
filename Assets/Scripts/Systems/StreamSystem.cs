@@ -20,7 +20,6 @@ public class StreamSystem : EgoSystem<EgoConstraint<SerialPortComponent>>
 				serialPortComponent.port.Open();
 				serialPortComponent.port.ReadTimeout = 1;
 			}
-	
 		});
 	}
 
@@ -34,7 +33,7 @@ public class StreamSystem : EgoSystem<EgoConstraint<SerialPortComponent>>
 				{
 					try
 					{
-						Debug.Log("Receive Data from Serialport 1");
+						//Debug.Log("Receive Data from Serialport 1");
 						ReceiveAdruinoInput(serialPortComponent.port.ReadByte(), 1);
 					}
 					catch (System.TimeoutException)
@@ -50,7 +49,7 @@ public class StreamSystem : EgoSystem<EgoConstraint<SerialPortComponent>>
 				{
 					try
 					{
-						Debug.Log("Receive Data from Serialport 2");
+						//Debug.Log("Receive Data from Serialport 2");
 						ReceiveAdruinoInput(serialPortComponent.port.ReadByte(), 2);
 					}
 					catch (System.TimeoutException)

@@ -94,16 +94,16 @@ public class MovementSystem : EgoSystem<EgoConstraint<Transform, MovementCompone
 		{
 			if (e.playerID == movement.playerID)
 			{
-				Debug.Log(e.data + ", " + e.playerID);
+				//Debug.Log(e.data + ", " + e.playerID);
 				if (e.data == 1)
 				{
-					Debug.Log(e.playerID + ": Start move right!");
+					//Debug.Log(e.playerID + ": Start move right!");
 					movement.canMoveRight = true;
 					movement.canMoveLeft = false;
 				}
 				else if (e.data == 2)
 				{
-					Debug.Log(e.playerID + ": Stop move right!");
+					//Debug.Log(e.playerID + ": Stop move right!");
 					movement.canMoveRight = false;
 				}
 
