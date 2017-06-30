@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AnimationSystem : EgoSystem<EgoConstraint<Transform, PlayerComponent, Animator, JumpComponent, MovementComponent, OnCollisionEnter2DComponent>>
+public class AnimationSystem : EgoSystem<EgoConstraint<Transform, PlayerComponent, Animator, JumpComponent, MovementComponent, OnCollisionEnter2DComponent, SpriteRenderer>>
 {
 	public override void Start()
 	{
@@ -11,7 +11,7 @@ public class AnimationSystem : EgoSystem<EgoConstraint<Transform, PlayerComponen
 
 	void Handle(InputDataReceivedEvent e) {
 
-		constraint.ForEachGameObject ((egoComponent, transform, player, animator, jump, movement, onCollisionEnter) => {
+		constraint.ForEachGameObject ((egoComponent, transform, player, animator, jump, movement, onCollisionEnter, spriteRenderer) => {
 
 
 			if (e.playerID == player.playerID) {
@@ -19,12 +19,17 @@ public class AnimationSystem : EgoSystem<EgoConstraint<Transform, PlayerComponen
 				if (e.data == 1 && animator.GetBool("running") == false) {
 					animator.SetBool("running", true);
 					animator.SetBool("running2", true);
+					spriteRenderer.flipX = true;
 				}
 
 				if (e.data == 3 && animator.GetBool("running") == false)
 				{
 					animator.SetBool("running", true);
 					animator.SetBool("running2", true);
+
+					if (spriteRenderer.flipX == true) {
+						spriteRenderer.flipX = false;
+					}
 				}
 
 				if (e.data == 2 && animator.GetBool("running") == true) {
@@ -51,7 +56,7 @@ public class AnimationSystem : EgoSystem<EgoConstraint<Transform, PlayerComponen
 	}
 
 	void Handle(PlayerHitEvent e) {
-		constraint.ForEachGameObject ((egoComponent, transform, player, animator, jump, movement, onCollisionEnter) => {
+		constraint.ForEachGameObject ((egoComponent, transform, player, animator, jump, movement, onCollisionEnter, spriteRenderer) => {
 			if (e.playerID == player.playerID) {
 				animator.SetBool ("hit", true);
 			}
@@ -61,7 +66,7 @@ public class AnimationSystem : EgoSystem<EgoConstraint<Transform, PlayerComponen
 	void Handle(CollisionEnter2DEvent e) {
 		Debug.Log("Enter Collision 2D Handler");
 		Debug.Log(e.egoComponent1.name);
-		constraint.ForEachGameObject ((egoComponent, transform, player, animator, jump, movement, onCollisionEnter) => {
+		constraint.ForEachGameObject ((egoComponent, transform, player, animator, jump, movement, onCollisionEnter, spriteRenderer) => {
 			if (e.egoComponent2.HasComponents<Ground>() && animator.GetBool("grounded") == false ) {
 				animator.SetBool("grounded", true);
 			}
