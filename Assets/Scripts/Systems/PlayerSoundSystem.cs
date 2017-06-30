@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerSoundSystem : EgoSystem<EgoConstraint<Transform, PlayerComponent, Animator, JumpComponent, MovementComponent, OnCollisionEnter2DComponent>>
+public class PlayerSoundSystem : EgoSystem<EgoConstraint<Transform, PlayerComponent, Animator, JumpComponent, MovementComponent, OnCollisionEnter2DComponent, PlayerSoundComponent>>
 {
 	public override void Start()
 	{
@@ -11,7 +11,7 @@ public class PlayerSoundSystem : EgoSystem<EgoConstraint<Transform, PlayerCompon
 
 	void Handle(InputDataReceivedEvent e) {
 
-		constraint.ForEachGameObject ((egoComponent, transform, player, animator, jump, movement, onCollisionEnter) => {
+		constraint.ForEachGameObject ((egoComponent, transform, player, animator, jump, movement, onCollisionEnter, sound) => {
 
 
 			if (e.playerID == player.playerID) {
@@ -42,7 +42,8 @@ public class PlayerSoundSystem : EgoSystem<EgoConstraint<Transform, PlayerCompon
 				}
 
 				if (jump.jumpstatus == JumpComponent.Jumpstatus.falling && animator.GetBool("jumping") == true) {
-					
+					sound.audioSource.clip = sound.jumpSound;
+					sound.audioSource.Play();
 				}
 			}
 		});
@@ -50,7 +51,7 @@ public class PlayerSoundSystem : EgoSystem<EgoConstraint<Transform, PlayerCompon
 	}
 
 	void Handle(PlayerHitEvent e) {
-		constraint.ForEachGameObject ((egoComponent, transform, player, animator, jump, movement, onCollisionEnter) => {
+		constraint.ForEachGameObject ((egoComponent, transform, player, animator, jump, movement, onCollisionEnter, sound) => {
 			if (e.playerID == player.playerID) {
 				
 			}
@@ -58,7 +59,7 @@ public class PlayerSoundSystem : EgoSystem<EgoConstraint<Transform, PlayerCompon
 	}
 
 	void Handle(CollisionEnter2DEvent e) {
-		constraint.ForEachGameObject ((egoComponent, transform, player, animator, jump, movement, onCollisionEnter) => {
+		constraint.ForEachGameObject ((egoComponent, transform, player, animator, jump, movement, onCollisionEnter, sound) => {
 			if (e.egoComponent2.HasComponents<Ground>() && animator.GetBool("grounded") == false ) {
 				
 			}
