@@ -1,9 +1,10 @@
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class RestartGameComponent : MonoBehaviour
+public class ScoreUIComponent : MonoBehaviour
 {
-    public float timer = 5f;
+    public float playerID;
+    public float scoreID;
 }
 
 //DO NOT ADD MONOBEHAVIOUR MESSAGES (Start, Update, etc.)

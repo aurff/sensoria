@@ -17,7 +17,10 @@ public class EgoInterface : MonoBehaviour
 			new StartScreenUISystem(),
 			new PlayerReadySystem(),
 			new SceneManagementSystem(),
-			new AnimationSystem()
+			new AnimationSystem(),
+			new ScoreUISystem(),
+			new BorderSystem(),
+			new RestartGameSystem()
 		);
     }
 
