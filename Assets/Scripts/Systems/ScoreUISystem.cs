@@ -7,17 +7,7 @@ public class ScoreUISystem : EgoSystem<EgoConstraint<ScoreUIComponent>>
 		EgoEvents<ScoreEvent>.AddHandler(Handle);
 		EgoEvents<SubtractScoreEvent>.AddHandler(Handle);
 	}
-
-	public override void Update()
-	{
-		
-	}
-
-	public override void FixedUpdate()
-	{
-		
-	}
-
+	
 	void Handle(ScoreEvent e)
 	{
 		constraint.ForEachGameObject ((egoComponent, scoreUI) => {
