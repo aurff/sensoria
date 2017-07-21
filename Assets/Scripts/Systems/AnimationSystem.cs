@@ -11,9 +11,8 @@ public class AnimationSystem : EgoSystem<EgoConstraint<Transform, PlayerComponen
 
 	void Handle(InputDataReceivedEvent e) {
 
+
 		constraint.ForEachGameObject ((egoComponent, transform, player, animator, jump, movement, onCollisionEnter, spriteRend) => {
-
-
 			if (e.playerID == player.playerID) {
 
 				if (e.data == 1 && animator.GetBool("running") == false) {
@@ -30,7 +29,8 @@ public class AnimationSystem : EgoSystem<EgoConstraint<Transform, PlayerComponen
 				{
 					animator.SetBool("running", true);
 					animator.SetBool("running2", true);
-					if (spriteRend.flipX == true)
+
+        if (spriteRend.flipX == true)
 					{
 						spriteRend.flipX = false;
 					}
