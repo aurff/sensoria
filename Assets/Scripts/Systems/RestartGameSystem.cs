@@ -3,11 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class RestartGameSystem : EgoSystem<EgoConstraint<RestartGameComponent>>
 {
-	public override void Start()
-	{
-		
-	}
-
 	public override void Update()
 	{
 		constraint.ForEachGameObject ((egoComponent, restart) => {
@@ -19,11 +14,6 @@ public class RestartGameSystem : EgoSystem<EgoConstraint<RestartGameComponent>>
 				SceneManager.LoadScene("Level");
 			}
 		});
-		
-	}
-
-	public override void FixedUpdate()
-	{
 		
 	}
 }

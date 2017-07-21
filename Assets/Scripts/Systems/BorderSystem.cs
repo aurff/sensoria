@@ -11,21 +11,16 @@ public class BorderSystem : EgoSystem<EgoConstraint<PlayerComponent>>
 	{
 		constraint.ForEachGameObject ((egoComponent, player) => {
 
-			if (player.transform.position.x < player.leftBorder || player.transform.position.x < player.rightBorder || 
+			if (player.transform.position.x <= player.leftBorder || player.transform.position.x >= player.rightBorder || 
 				player.transform.position.y < player.bottomBorder)
 			{
-				player.score--;
-
-				EgoEvents<SubtractScoreEvent>.AddEvent(new SubtractScoreEvent(player.playerID, player.score));
-
+				if (player.score > 0)
+				{
+					player.score--;
+					EgoEvents<SubtractScoreEvent>.AddEvent(new SubtractScoreEvent(player.playerID, player.score));
+				}
 				player.transform.position = player.initialPosition;
-
 			}
 		});
-	}
-
-	public override void FixedUpdate()
-	{
-		
 	}
 }
